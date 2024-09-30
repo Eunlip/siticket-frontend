@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { PiMapPin } from 'react-icons/pi';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 interface SelectGroupTwoProps {
   value: string;
@@ -56,6 +56,8 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
 }) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const pathname = useLocation();
+  const { id } = useParams();
+  console.log(id);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
@@ -91,7 +93,7 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
             >
               {placeholder}
             </option>
-            {pathname.pathname === '/users/input-user' && '/users/edit-user'
+            {pathname.pathname === '/users/input-user' || `/users/edit-user/${id}`
               ? Role.map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.label}

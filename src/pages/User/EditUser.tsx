@@ -138,7 +138,6 @@ const EditUser: React.FC = () => {
                   className="w-full font-normal rounded-lg border-[1.5px] bg-gray-3 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
                   value={formData.password || ''}
                   onChange={handleChange}
-                  required
                 />
               </label>
             </div>
