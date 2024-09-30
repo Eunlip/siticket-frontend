@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
 
 
 	return (
-		<nav className='flex items-center justify-between'>
+		<nav className='flex items-center justify-between pt-3'>
 			<div className='flex items-center gap-2'>
 				<img src={Logo} alt='logo ut' width={40} height={40} />
 				<h1 className='font-bold uppercase cursor-default text-zinc-200 tracking-wide'>United Tractors</h1>

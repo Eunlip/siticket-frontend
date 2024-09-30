@@ -110,7 +110,7 @@ const InputComplaint: React.FC = () => {
                     type="text"
                     name="nama_pelapor"
                     placeholder="Example"
-                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input text-bodydark2 dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition disabled:cursor-not-allowed disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input text-bodydark2 dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50"
                     value={currentUser?.[0]?.name ?? ''}
                     disabled
                   />
@@ -124,7 +124,7 @@ const InputComplaint: React.FC = () => {
                     type="email"
                     name="email_pelapor"
                     placeholder="johndoe@example.com"
-                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input text-bodydark2 dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition disabled:cursor-not-allowed disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input text-bodydark2 dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50"
                     value={currentUser?.[0]?.email ?? ''}
                     disabled
                   />

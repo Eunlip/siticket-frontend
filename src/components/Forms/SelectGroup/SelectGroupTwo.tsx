@@ -21,7 +21,7 @@ const Role = [
   },
 ];
 
-const sektor = [
+const Sektor = [
   {
     value: 'MIA4',
     label: 'MIA4',
@@ -93,13 +93,14 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
             >
               {placeholder}
             </option>
-            {pathname.pathname === '/users/input-user' || `/users/edit-user/${id}`
+            {pathname.pathname === '/users/input-user' ||
+            pathname.pathname === `/users/edit-user/${id}`
               ? Role.map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.label}
                   </option>
                 ))
-              : sektor.map((item) => (
+              : Sektor.map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.label}
                   </option>
