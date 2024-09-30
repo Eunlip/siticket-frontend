@@ -1,13 +1,61 @@
 import React, { useState } from 'react';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+import { PiMapPin } from 'react-icons/pi';
+import { useLocation } from 'react-router-dom';
 
 interface SelectGroupTwoProps {
   value: string;
+  title: string;
+  placeholder: string;
   setValue: (value: string) => void;
 }
 
-const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({ value, setValue }) => {
+const Role = [
+  {
+    value: 'admin',
+    label: 'Admin',
+  },
+  {
+    value: 'guest',
+    label: 'Guest',
+  },
+];
+
+const sektor = [
+  {
+    value: 'MIA4',
+    label: 'MIA4',
+  },
+  {
+    value: 'PPA',
+    label: 'PPA',
+  },
+  {
+    value: 'BUMA MAIN SHOP',
+    label: 'BUMA MAIN SHOP',
+  },
+  {
+    value: 'PASAR PANAS',
+    label: 'PASAR PANAS',
+  },
+  {
+    value: 'RISA',
+    label: 'RISA',
+  },
+  {
+    value: 'TRAINING CENTER',
+    label: 'TRAINING CENTER',
+  },
+];
+
+const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
+  value,
+  setValue,
+  title,
+  placeholder,
+}) => {
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
+  const pathname = useLocation();
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
@@ -15,11 +63,15 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({ value, setValue }) => {
 
   return (
     <div>
-      <label className="mb-3 block text-black dark:text-white font-medium">
-        Role
-        <div className="relative z-20 bg-white dark:bg-form-input">
+      <label className=" block text-black dark:text-white font-medium">
+        {title}
+        <div className="relative z-20 bg-white dark:bg-form-input mt-3">
           <span className="absolute top-1/2 left-4 z-30 -translate-y-1/2">
-            <MdOutlineAdminPanelSettings className="text-neutral-500 text-xl dark:text-bodydark" />
+            {pathname.pathname === '/add-complaint' ? (
+              <PiMapPin className="text-neutral-500 text-xl dark:text-bodydark" />
+            ) : (
+              <MdOutlineAdminPanelSettings className="text-neutral-500 text-xl dark:text-bodydark" />
+            )}
           </span>
 
           <select
@@ -28,19 +80,28 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({ value, setValue }) => {
               setValue(e.target.value);
               changeTextColor();
             }}
-            className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ${
+            className={`relative font-normal z-20 w-full appearance-none border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input rounded-lg ${
               isOptionSelected ? 'text-black dark:text-white' : ''
             }`}
           >
-            <option value="" disabled className="text-body dark:text-bodydark">
-              - Select Role -
+            <option
+              value=""
+              disabled
+              className="text-bodydark dark:text-bodydark"
+            >
+              {placeholder}
             </option>
-            <option value="admin" className="text-black dark:text-bodydark">
-              Admin
-            </option>
-            <option value="guest" className="text-black dark:text-bodydark">
-              Guest
-            </option>
+            {pathname.pathname === '/users/input-user' && '/users/edit-user'
+              ? Role.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))
+              : sektor.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
           </select>
 
           <span className="absolute top-1/2 right-4 z-999999 -translate-y-1/2">

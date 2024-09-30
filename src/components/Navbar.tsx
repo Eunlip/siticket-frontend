@@ -15,11 +15,11 @@ const Navbar: React.FC = () => {
 
 	return (
 		<nav className='flex items-center justify-between'>
-			<div className='flex items-center gap-3'>
+			<div className='flex items-center gap-2'>
 				<img src={Logo} alt='logo ut' width={40} height={40} />
-				<h1 className='font-semibold uppercase cursor-default'>United Tractors</h1>
+				<h1 className='font-bold uppercase cursor-default text-zinc-200 tracking-wide'>United Tractors</h1>
 			</div>
-			<Link to={isAuthenticated ? '/' : '/auth/signin'} className='text-base px-8 btn btn-outline btn-ghost hover:border-[#ffc107] border-[#ffc107] hover:bg-[#ffc107]'>
+			<Link to={isAuthenticated ? '/' : '/auth/signin'} className='text-sm font-semibold px-8 border py-2 rounded-md text-white transition-colors hover:border-[#ffc107] border-[#ffc107] hover:bg-[#ffc107]'>
 				Login
 			</Link>
 		</nav>

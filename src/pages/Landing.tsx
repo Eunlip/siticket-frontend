@@ -14,10 +14,10 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="container px-0 pt-5 mx-auto 2xl:px-32">
+    <div className="container px-0 pt-5 mx-auto 2xl:px-32 min-h-screen">
       <Navbar />
       <div className="container flex justify-between mt-10">
-        <div className="py-32 space-y-10">
+        <div className="py-32 flex flex-col gap-10">
           <div className="space-y-7">
             <h1 className="text-5xl font-bold text-slate-100">
               Aplikasi Pelaporan Ticket
@@ -29,7 +29,7 @@ const LandingPage = () => {
           </div>
           <Link
             to={isAuthenticated ? '/' : '/auth/signin'}
-            className="btn btn-ghost hover:bg-[#deb53c] px-8 bg-[#ffc107] text-slate-900"
+            className="py-3 hover:bg-[#f0c545] px-10 w-fit rounded-md font-semibold bg-[#ffc107] text-neutral-600"
           >
             Buat Laporan
           </Link>

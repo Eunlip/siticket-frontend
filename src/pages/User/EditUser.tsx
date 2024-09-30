@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axiosInstance from '../../utils/axiosConfig';
 import toast from 'react-hot-toast';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import { TUserData } from '../../types/user';
 
-const InputUser: React.FC = () => {
-  const [formData, setFormData] = useState({
+const EditUser: React.FC = () => {
+  const [formData, setFormData] = useState<{
+    role: string;
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+  }>({
     role: '',
     name: '',
     username: '',
@@ -14,6 +21,7 @@ const InputUser: React.FC = () => {
     password: '',
   });
 
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,14 +34,14 @@ const InputUser: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post(
-        '/api/admin/user/store',
+      const response = await axiosInstance.put(
+        `/api/admin/user/update/${id}`,
         formData,
       );
 
       if (response.status === 200) {
-        toast.success('Horaii!, User has been added👏', {
-          style: { fontWeight: 500 },
+        toast.success('Horaii!, User has been updated👏', {
+          style: { fontWeight: 500, fontSize: '14px' },
         });
         navigate('/users/data-users');
       }
@@ -41,6 +49,19 @@ const InputUser: React.FC = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      axiosInstance
+        .get(`/api/admin/user/${id}`)
+        .then((response) => {
+          setFormData(response.data.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+        });
+    }
+  }, []);
 
   return (
     <>
@@ -61,15 +82,15 @@ const InputUser: React.FC = () => {
               title="Role"
               placeholder="-- Select Role --"
             />
-            <div className='flex justify-between gap-5'>
-              <div className='flex-1'>
+            <div className="flex justify-between gap-5">
+              <div className="flex-1">
                 <label className="space-y-3 block text-black dark:text-white font-medium">
                   <span>Name</span>
                   <input
                     type="text"
                     name="name"
                     placeholder="Example"
-                    className="w-full rounded-lg bg-gray-3 border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
+                    className="w-full font-normal rounded-lg bg-gray-3 border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -77,15 +98,15 @@ const InputUser: React.FC = () => {
                 </label>
               </div>
 
-              <div className='flex-1'>
+              <div className="flex-1">
                 <label className="space-y-3 block text-black dark:text-white font-medium">
                   <span>Username</span>
                   <input
                     type="text"
                     name="username"
                     placeholder="Example"
-                    className="w-full rounded-lg border-[1.5px] bg-gray-3 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
-                    value={formData.username}
+                    className="w-full font-normal rounded-lg border-[1.5px] bg-gray-3 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
+                    value={formData.username || ''}
                     onChange={handleChange}
                     required
                   />
@@ -99,8 +120,8 @@ const InputUser: React.FC = () => {
                   type="email"
                   name="email"
                   placeholder="johndoe@example.com"
-                  className="w-full rounded-lg border-[1.5px] bg-gray-3 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
-                  value={formData.email}
+                  className="w-full font-normal rounded-lg border-[1.5px] bg-gray-3 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
+                  value={formData.email || ''}
                   onChange={handleChange}
                   required
                 />
@@ -114,8 +135,8 @@ const InputUser: React.FC = () => {
                   type="password"
                   name="password"
                   placeholder="********"
-                  className="w-full rounded-lg border-[1.5px] bg-gray-3 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
-                  value={formData.password}
+                  className="w-full font-normal rounded-lg border-[1.5px] bg-gray-3 border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
+                  value={formData.password || ''}
                   onChange={handleChange}
                   required
                 />
@@ -123,8 +144,8 @@ const InputUser: React.FC = () => {
             </div>
             <div className="flex justify-end gap-5">
               <Link
-                to='/users/data-users'
-                className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                to="/users/data-users"
+                className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-body dark:text-white"
                 type="submit"
               >
                 Cancel
@@ -143,4 +164,4 @@ const InputUser: React.FC = () => {
   );
 };
 
-export default InputUser;
+export default EditUser;

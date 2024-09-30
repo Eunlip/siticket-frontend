@@ -3,6 +3,7 @@ import { TUserData } from '../../types/user';
 import axiosInstance from '../../utils/axiosConfig';
 import { LiaEdit, LiaTrashAlt } from 'react-icons/lia';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const UserTable = () => {
   const [users, setUsers] = useState<TUserData[]>([]);
@@ -20,6 +21,26 @@ const UserTable = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDelete = (id: number) => {
+    const ok = window.confirm('Are you sure you want to delete this user?');
+
+    if (!ok) {
+      return;
+    }
+
+    axiosInstance
+      .delete(`/api/admin/user/delete/${id}`)
+      .then(() => {
+        toast.success('User has been deleted 😞', {
+          style: { fontWeight: 500, fontSize: '14px' },
+        });
+        getAllUsers();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   useEffect(() => {
@@ -61,10 +82,10 @@ const UserTable = () => {
                 )}
               </td>
             </tr>
-            {users.map((user) => (
+            {users.map((user, i: number) => (
               <tr key={user.id}>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p className="text-black dark:text-white">{user.id}</p>
+                  <p className="text-black dark:text-white">{i + 1}</p>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
@@ -77,22 +98,28 @@ const UserTable = () => {
                   </h5>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                  <p
-                    className={`badge border-none badge-lg h-10 w-20 text-white cursor-default font-normal ${
+                  <span
+                    className={`inline-flex items-center capitalize rounded-full w-20 justify-center h-10 text-sm font-medium ring-1 ring-inset  ${
                       user.role === 'admin'
-                        ? 'bg-primary'
-                        : 'bg-orange-500'
+                        ? 'text-blue-700 ring-blue-700/10 bg-blue-50 dark:text-blue-50 dark:bg-blue-800 dark:ring-blue-500'
+                        : 'text-green-800 ring-green-600/20 bg-green-50 dark:text-green-50 dark:bg-green-800 dark:ring-green-600'
                     }`}
                   >
                     {user.role}
-                  </p>
+                  </span>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
-                    <Link to='/users/edit-user' className="text-yellow-500 hover:text-yellow-400">
+                    <Link
+                      to={`/users/edit-user/${user.id}`}
+                      className="text-yellow-500 hover:text-yellow-400"
+                    >
                       <LiaEdit className="text-2xl" />
                     </Link>
-                    <button className="text-red-500 hover:text-red-400">
+                    <button
+                      onClick={() => handleDelete(user.id)}
+                      className="text-red-500 hover:text-red-400"
+                    >
                       <LiaTrashAlt className="text-2xl" />
                     </button>
                   </div>

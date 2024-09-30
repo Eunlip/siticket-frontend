@@ -6,7 +6,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      satoshi: ['Satoshi', 'sans-serif'],
+      epilogue: ['Epilogue', 'sans-serif'],
     },
     screens: {
       '2xsm': '375px',
@@ -250,8 +250,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require('daisyui')],
-  daisyui: {
-    themes: ['halloween', 'light'],
-  },
+  //plugins: [require('daisyui')],
+  //daisyui: {
+  //  themes: ['halloween', 'light'],
+  //},
 };

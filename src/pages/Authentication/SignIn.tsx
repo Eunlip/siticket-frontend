@@ -42,8 +42,8 @@ const SignIn = () => {
         Cookies.set('access_token', access_token, { expires: 1 });
         Cookies.set('role', role, { expires: 1 });
         login(response.data.data, access_token);
-        toast.success('Yaay! You have successfully logged in!', {
-          style: { fontWeight: 500 },
+        toast.success('Yaay! You have successfully logged in!👏', {
+          style: { fontWeight: 500, fontStyle: '14px' },
         });
         if (role === 'admin') navigate('/admin-dashboard');
         if (role === 'guest') navigate('/guest-dashboard');
@@ -51,14 +51,14 @@ const SignIn = () => {
     } catch (error) {
       if (formData.username && formData.password) {
         toast.error('Oops! Invalid username or password', {
-          style: { fontWeight: 500 },
+          style: { fontWeight: 500, fontStyle: '14px' },
         });
         return;
       }
 
       if (formData.username === '' && formData.password === '') {
         toast.error('Please enter your username and password!', {
-          style: { fontWeight: 500 },
+          style: { fontWeight: 500, fontStyle: '14px' },
         });
         return;
       }
@@ -79,8 +79,8 @@ const SignIn = () => {
           <div className="w-full p-4 sm:p-12.5 ">
             <div className="flex flex-col gap-5">
               <span className="flex items-center justify-center"></span>
-              <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-lg">
-                Sign In to Si-ticket
+              <h2 className="mb-9 text-2xl font-medium text-black sm:text-title-md2">
+                Login dulu yaa! 🚀
               </h2>
             </div>
 
@@ -96,7 +96,7 @@ const SignIn = () => {
                       onChange={handleChange}
                       autoComplete="username"
                       placeholder="Enter your username"
-                      className="w-full rounded-lg border border-slate-400 bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-strokedark focus-visible:shadow-none"
+                      className="w-full font-normal rounded-lg border border-slate-400 bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-strokedark focus-visible:shadow-none"
                       required
                     />
 
@@ -132,7 +132,7 @@ const SignIn = () => {
                       onChange={handleChange}
                       autoComplete="current-password"
                       placeholder="6+ Characters, 1 Capital letter"
-                      className="w-full rounded-lg border border-slate-400 bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-strokedark focus-visible:shadow-none"
+                      className="w-full rounded-lg font-normal border border-slate-400 bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-strokedark focus-visible:shadow-none"
                       required
                     />
 
@@ -168,8 +168,7 @@ const SignIn = () => {
                 />*/}
               <button
                 type="submit"
-                className="btn btn-block btn-primary rounded-lg text-white"
-                data-theme="halloween"
+                className="px-10 py-2 w-full hover:bg-yellow-500/85 transition-colors bg-yellow-500 rounded-lg text-white"
               >
                 Sign In
               </button>

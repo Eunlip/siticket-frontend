@@ -27,6 +27,7 @@ import DataUser from './pages/User/DataUser';
 import Complaint from './pages/Complaint';
 import Guest from './pages/Dashboard/Guest';
 import InputComplaint from './pages/Complaint/inputComplaint';
+import EditUser from './pages/User/EditUser';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -53,7 +54,7 @@ function App() {
   }, [token]);
 
   return (
-    <div className="h-screen" data-theme="halloween">
+    <div className="bg-neutral-800">
       <Toaster />
       {loading && <Loader />}
       {!token ? (
@@ -133,6 +134,15 @@ function App() {
                       <>
                         <PageTitle title="Data Users | Si-ticket" />
                         <DataUser />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/users/edit-user/:id"
+                    element={
+                      <>
+                        <PageTitle title="Edit Data Users | Si-ticket" />
+                        <EditUser />
                       </>
                     }
                   />
