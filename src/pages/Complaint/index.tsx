@@ -4,7 +4,7 @@ import ComplaintTable from '../../components/Tables/ComplaintTable';
 const Complaint = () => {
   return (
     <div>
-      <Breadcrumb pageName="Complaint Table" />
+      <Breadcrumb pageName="Data Complaints" />
 
       <ComplaintTable />
     </div>

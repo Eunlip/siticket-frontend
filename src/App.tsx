@@ -25,13 +25,14 @@ import {
 import InputUser from './pages/User/InputUser';
 import DataUser from './pages/User/DataUser';
 import Complaint from './pages/Complaint';
+import Guest from './pages/Dashboard/Guest';
+import InputComplaint from './pages/Complaint/inputComplaint';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [role, setRole] = useState<string | null>(null);
+  const [role, setRole] = useState<string | undefined>(undefined);
   const token = Cookies.get('access_token');
-  console.log('Token: ', token)
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -44,8 +45,12 @@ function App() {
     if (token) {
       setIsAuthenticated(true);
     }
+
+    if (token) {
+      const role = Cookies.get('role');
+      setRole(role);
+    }
   }, [token]);
-  console.log(role);
 
   return (
     <div className="h-screen" data-theme="halloween">
@@ -207,11 +212,20 @@ function App() {
               ) : (
                 <>
                   <Route
-                    path="/admin-dashboard"
+                    path="/guest-dashboard"
                     element={
                       <>
                         <PageTitle title="Dashboard | Si-ticket" />
-                        <AdminDashboard />
+                        <Guest />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/add-complaint"
+                    element={
+                      <>
+                        <PageTitle title="Dashboard | Si-ticket" />
+                        <InputComplaint />
                       </>
                     }
                   />

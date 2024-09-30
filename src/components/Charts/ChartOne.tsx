@@ -120,7 +120,7 @@ import axiosInstance from '../../utils/axiosConfig';
 interface ChartOneState {
   series: {
     name: string;
-    data: { x: string; y: number; color: string }[];
+    data: { x: string; y: number, fillColor: any, strokeColor: any }[];
   }[];
   options: ApexOptions;
 }
@@ -206,7 +206,7 @@ const ChartOne: React.FC = () => {
       },
       markers: {
         size: 0,
-        colors: '#fff',
+        colors: ['#3056D3', '#80CAEE'],
         strokeColors: ['#3056D3', '#80CAEE'],
         strokeWidth: 4,
         strokeOpacity: 0.9,
@@ -244,23 +244,22 @@ const ChartOne: React.FC = () => {
     try {
       const response = await axiosInstance.get('/api/admin/tickets/all');
       const data = response.data;
-      console.log(data);
       const openData = data.open || 0;
       const closedData = data.closed || 0;
 
-      const totalTickets = Math.max(openData, closedData); // Total tiket maksimum
       setChartData({
         series: [
           {
             name: 'Tickets',
             data: [
-              { x: 'Open', y: openData, color: '#3056D3' },
-              { x: 'Close', y: closedData, color: '#1e1e' },
+              { x: 'Open', y: openData, fillColor: '#3056D3', strokeColor: '#3056D3' },
+              { x: 'Close', y: closedData, fillColor: '#80CAEE', strokeColor: '#80CAEE' },
             ],
           },
         ],
         options: {
           ...chartData.options,
+          colors: ['#3056D3', '#80CAEE'],
           xaxis: {
             categories: ['Open', 'Close'],
           },
@@ -280,14 +279,14 @@ const ChartOne: React.FC = () => {
       ...prevState,
     }));
   };
-  handleReset;
 
   useEffect(() => {
     getStatsChartData();
+    handleReset();
   }, []);
 
   return (
-    <div className="col-span-12 rounded-lg border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
+    <div className="col-span-12 rounded-lg border transition-all duration-300 border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
         <div className="flex w-full flex-wrap gap-3 sm:gap-5">
           <div className="flex min-w-17.5   ">

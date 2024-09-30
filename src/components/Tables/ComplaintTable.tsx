@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import axiosInstance from '../../utils/axiosConfig';
+import Cookies from 'js-cookie';
 
-interface DataRow {
+interface IDataRow {
   nama_pelapor: string;
   email_pelapor: string;
   sektor: string;
@@ -10,9 +11,9 @@ interface DataRow {
   keterangan: string;
 }
 
-const columns: TableColumn<DataRow>[] = [
+const columns: TableColumn<IDataRow>[] = [
   {
-    name: 'Nama',
+    name: 'Name',
     selector: (row) => row.nama_pelapor,
     sortable: true,
   },
@@ -38,45 +39,56 @@ const columns: TableColumn<DataRow>[] = [
   },
 ];
 
-const customStyles = {
-  table: {
-    style: {
-      backgroundColor: '#000',
-      borderRadius: '0.5rem'
-    },
-  },
-  rows: {
-    style: {
-      minHeight: '72px',
-    },
-  },
-  headCells: {
-    style: {
-      paddingLeft: '24px',
-      paddingRight: '0px',
-      fontSize: '14px',
-    },
-  },
-  cells: {
-    style: {
-      fontSize: '14px',
-      paddingLeft: '24px',
-      paddingRight: '0px',
-    },
-  },
-};
-
 const ComplaintTable = () => {
-  const [users, setUsers] = useState<DataRow[]>([]);
+  const [users, setUsers] = useState<IDataRow[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const role = Cookies.get('role');
+
+  const customStyles = {
+    rows: {
+      style: {
+        backgroundColor: '#f9fafb',
+        color: '#000000',
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: '24px',
+        paddingRight: '0px',
+        fontSize: '16px',
+        fontWeight: '700',
+        backgroundColor: '#f9fafb',
+        color: '#000000',
+      },
+    },
+    cells: {
+      style: {
+        fontSize: '14px',
+        paddingLeft: '24px',
+        paddingRight: '0px',
+        color: '#000000',
+      },
+    },
+    pagination: {
+      style: {
+        backgroundColor: '#f9fafb',
+        color: '#000000',
+      },
+    },
+  };
 
   const getAllUsers = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get('/api/admin/tickets');
-      const data = response.data.data;
-      setUsers(data);
-      setLoading(false);
+      if (role === 'admin') {
+        const response = await axiosInstance.get('/api/admin/tickets');
+        const data = response.data.data;
+        setUsers(data);
+      } else if (role === 'guest') {
+        const response = await axiosInstance.get('/api/guest/tickets');
+        const data = response.data.data;
+        setUsers(data);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -89,7 +101,7 @@ const ComplaintTable = () => {
   }, []);
 
   return (
-    <div className="container mx-auto shadow-lg rounded-md">
+    <div className="container mx-auto shadow-md rounded-md">
       <DataTable
         columns={columns}
         data={users}

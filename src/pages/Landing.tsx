@@ -14,9 +14,7 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div
-      className="container px-0 pt-5 mx-auto 2xl:px-32"
-    >
+    <div className="container px-0 pt-5 mx-auto 2xl:px-32">
       <Navbar />
       <div className="container flex justify-between mt-10">
         <div className="py-32 space-y-10">
@@ -40,6 +38,6 @@ const LandingPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default LandingPage;

@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
 				<img src={Logo} alt='logo ut' width={40} height={40} />
 				<h1 className='font-semibold uppercase cursor-default'>United Tractors</h1>
 			</div>
-			<Link to={isAuthenticated ? '/' : '/auth/signin'} className='text-base px-7 btn btn-outline btn-ghost hover:border-[#ffc107] border-[#ffc107] hover:bg-[#ffc107]'>
+			<Link to={isAuthenticated ? '/' : '/auth/signin'} className='text-base px-8 btn btn-outline btn-ghost hover:border-[#ffc107] border-[#ffc107] hover:bg-[#ffc107]'>
 				Login
 			</Link>
 		</nav>

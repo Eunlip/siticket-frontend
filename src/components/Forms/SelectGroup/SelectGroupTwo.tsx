@@ -36,10 +36,10 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({ value, setValue }) => {
               - Select Role -
             </option>
             <option value="admin" className="text-black dark:text-bodydark">
-              Administrator
+              Admin
             </option>
             <option value="guest" className="text-black dark:text-bodydark">
-              Operator
+              Guest
             </option>
           </select>
 

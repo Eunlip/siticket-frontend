@@ -40,12 +40,13 @@ const SignIn = () => {
 
       if (response.status === 200) {
         Cookies.set('access_token', access_token, { expires: 1 });
+        Cookies.set('role', role, { expires: 1 });
         login(response.data.data, access_token);
         toast.success('Yaay! You have successfully logged in!', {
           style: { fontWeight: 500 },
         });
-        if (role === 'admin') navigate('/admin/dashboard');
-        if (role === 'guest') navigate('/guest/dashboard');
+        if (role === 'admin') navigate('/admin-dashboard');
+        if (role === 'guest') navigate('/guest-dashboard');
       }
     } catch (error) {
       if (formData.username && formData.password) {

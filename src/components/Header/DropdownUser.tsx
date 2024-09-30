@@ -5,6 +5,7 @@ import UserOne from '../../images/user/user-01.png';
 import Cookies from 'js-cookie';
 import axiosInstance from '../../utils/axiosConfig';
 import { TUserData } from '../../types/user';
+import { IoChevronDownOutline } from 'react-icons/io5';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -24,15 +25,30 @@ const DropdownUser = () => {
         throw new Error('Token not found');
       }
 
-      const response = await axiosInstance.get(`/api/admin/user/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const role = Cookies.get('role');
+      if (role === 'admin') {
+        const response = await axiosInstance.get(`/api/admin/user/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      const data = response.data.data;
+        const data = response.data.data;
 
-      setCurrentUser(data);
+        setCurrentUser(data);
+      }
+
+      if (role === 'guest') {
+        const response = await axiosInstance.get(`/api/guest/user/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = response.data.data;
+
+        setCurrentUser(data);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -50,35 +66,25 @@ const DropdownUser = () => {
         to="#"
       >
         {currentUser?.map((user) => (
-          <span key={user.id} className="hidden text-right lg:block">
+          <span key={user.id} className="block text-right">
             <span className="block text-sm font-medium text-black dark:text-white">
               {user.name}
             </span>
             <span className="block text-xs">
-              {user.role === 'admin' ? user.role : 'Operator'}
+              {user.role === 'admin' ? user.role : 'guest'}
             </span>
           </span>
         ))}
 
-        <span className="h-12 w-12 rounded-full">
+        <span className="h-12 w-12 rounded-full hidden sm:block">
           <img src={UserOne} alt="User" />
         </span>
 
-        <svg
-          className="hidden fill-current sm:block"
-          width="12"
-          height="8"
-          viewBox="0 0 12 8"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M0.410765 0.910734C0.736202 0.585297 1.26384 0.585297 1.58928 0.910734L6.00002 5.32148L10.4108 0.910734C10.7362 0.585297 11.2638 0.585297 11.5893 0.910734C11.9147 1.23617 11.9147 1.76381 11.5893 2.08924L6.58928 7.08924C6.26384 7.41468 5.7362 7.41468 5.41077 7.08924L0.410765 2.08924C0.0853277 1.76381 0.0853277 1.23617 0.410765 0.910734Z"
-            fill=""
-          />
-        </svg>
+        {dropdownOpen ? (
+          <IoChevronDownOutline className="rotate-180 transition-all" />
+        ) : (
+          <IoChevronDownOutline className="transition-all" />
+        )}
       </Link>
 
       {/* <!-- Dropdown Start --> */}
