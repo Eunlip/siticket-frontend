@@ -1,6 +1,28 @@
+@import 'datatables.net-dt';
+@import 'datatables.net-responsive-dt';
+@import 'datatables.net-select-dt';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Tailwind CSS classes for light mode */
+.bg-light-open {
+  background-color: #f6fefd; 
+}
+
+.bg-light-closed {
+  background-color: #fff5f5; 
+}
+
+Tailwind CSS classes for dark mode
+.dark .bg-dark-open {
+  background-color: #1d5353; 
+}
+
+.dark .bg-dark-closed {
+  background-color: #3a1a1a; 
+}
 
 @layer base {
   body {
@@ -117,7 +139,9 @@ span.flatpickr-weekday,
 }
 .flatpickr-day.inRange {
   @apply dark:!shadow-7;
-  box-shadow: -5px 0 0 #EFF4FB, 5px 0 0 #EFF4FB;
+  box-shadow:
+    -5px 0 0 #eff4fb,
+    5px 0 0 #eff4fb;
 }
 .flatpickr-day.inRange,
 .flatpickr-day.prevMonthDay.inRange,
@@ -213,4 +237,3 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
-

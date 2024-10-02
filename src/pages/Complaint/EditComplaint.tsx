@@ -3,8 +3,7 @@ import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axiosInstance from '../../utils/axiosConfig';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
-import { TUserData } from '../../types/user';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 interface IFormData {
@@ -15,9 +14,16 @@ interface IFormData {
   keterangan: string;
 }
 
+interface ICurrentComplaint {
+  nama_pelapor: string;
+  email_pelapor: string;
+  sektor: string;
+  keluhan: string;
+  keterangan: string;
+}
+
 const InputComplaint: React.FC = () => {
-  const [currentUser, setCurrentUser] = useState<TUserData[] | null>([]);
-  const [formData, setFormData] = useState<IFormData>({
+  const [currentComplaint, setCurrentComplaint] = useState<ICurrentComplaint>({
     nama_pelapor: '',
     email_pelapor: '',
     sektor: '',
@@ -25,13 +31,14 @@ const InputComplaint: React.FC = () => {
     keterangan: '',
   });
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
   const role = Cookies.get('role');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormData({
-      ...formData,
+    setCurrentComplaint({
+      ...currentComplaint,
       [e.target.name]: e.target.value,
     });
   };
@@ -40,60 +47,52 @@ const InputComplaint: React.FC = () => {
     e.preventDefault();
     try {
       if (role === 'guest') {
-        const response = await axiosInstance.post(
-          '/api/guest/ticket/store',
-          formData,
+        const response = await axiosInstance.put(
+          `api/guest/ticket/update/${id}`,
+          currentComplaint,
         );
 
-        if (response.status === 201) {
-          toast.success('Horaii!, Complaint has been added 👏', {
+        if (response.status === 200) {
+          toast.success('Horaii!, Complaint has been updated👏', {
             style: { fontWeight: 500, fontSize: '12px' },
           });
         }
         navigate('/my-complaint');
+        return;
       }
+
       if (role === 'admin') {
-        const response = await axiosInstance.post(
-          '/api/admin/ticket/store',
-          formData,
+        const response = await axiosInstance.put(
+          `api/admin/ticket/update/${id}`,
+          currentComplaint,
         );
 
-        if (response.status === 201) {
-          toast.success('Horaii!, Complaint has been added 👏', {
+        if (response.status === 200) {
+          toast.success('Horaii!, Complaint has been updated👏', {
             style: { fontWeight: 500, fontSize: '12px' },
           });
         }
         navigate('/complaint');
+        return;
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getCurrentUser = async () => {
+  const getCurrentComplaint = async () => {
     try {
-      const token = Cookies.get('access_token');
-      if (!token) {
-        throw new Error('Token not found');
-      }
-
-      const role = Cookies.get('role');
-
       if (role === 'guest') {
-        const response = await axiosInstance.get(`/api/guest/user/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const response = await axiosInstance.get(`api/guest/ticket/${id}`);
         const data = response.data.data;
-
-        setCurrentUser(data);
-        setFormData({
-          ...formData,
-          nama_pelapor: data[0].name,
-          email_pelapor: data[0].email,
-        });
+        setCurrentComplaint(data);
+        return;
+      }
+      if (role === 'admin') {
+        const response = await axiosInstance.get(`api/admin/ticket/${id}`);
+        const data = response.data.data;
+        setCurrentComplaint(data);
+        return;
       }
     } catch (error) {
       console.error(error);
@@ -101,19 +100,19 @@ const InputComplaint: React.FC = () => {
   };
 
   useEffect(() => {
-    getCurrentUser();
+    getCurrentComplaint();
   }, []);
 
   return (
     <>
-      <Breadcrumb pageName="Add Complaint" />
+      <Breadcrumb pageName="Edit My Complaint" />
 
       <form onSubmit={handleSubmit}>
         {/* <!-- Input Fields --> */}
         <div className="rounded-lg border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
             <h3 className="font-medium text-bodydark dark:text-white">
-              Input Data Complaint
+              Edit Data Complaint
             </h3>
           </div>
           <div className="flex flex-col gap-5.5 p-6.5">
@@ -125,18 +124,9 @@ const InputComplaint: React.FC = () => {
                     type="text"
                     name="nama_pelapor"
                     placeholder="Example"
-                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition dark:border-form-strokedark dark:bg-form-input text-black dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50 ${
-                      role === 'guest'
-                        ? 'disabled:bg-whiter disabled:cursor-not-allowed text-bodydark2'
-                        : ''
-                    }`}
-                    value={
-                      role === 'guest'
-                        ? currentUser?.[0]?.name ?? ''
-                        : formData.nama_pelapor
-                    }
-                    disabled={role === 'guest'}
-                    onChange={role === 'admin' ? handleChange : undefined}
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition disabled:cursor-not-allowed disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input text-bodydark2 dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50"
+                    value={currentComplaint.nama_pelapor}
+                    disabled
                   />
                 </label>
               </div>
@@ -148,26 +138,19 @@ const InputComplaint: React.FC = () => {
                     type="email"
                     name="email_pelapor"
                     placeholder="johndoe@example.com"
-                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition dark:border-form-strokedark dark:bg-form-input text-black dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50 ${
-                      role === 'guest'
-                        ? 'disabled:bg-whiter disabled:cursor-not-allowed text-bodydark2 '
-                        : ''
-                    }`}
-                    value={
-                      role === 'guest'
-                        ? currentUser?.[0]?.email ?? ''
-                        : formData.email_pelapor
-                    }
-                    disabled={role === 'guest'}
-                    onChange={role === 'admin' ? handleChange : undefined}
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition disabled:cursor-not-allowed disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input text-bodydark2 dark:text-bodydark2 placeholder-zinc-500 placeholder-opacity-50"
+                    value={currentComplaint.email_pelapor}
+                    disabled
                   />
                 </label>
               </div>
             </div>
 
             <SelectGroupTwo
-              value={formData.sektor}
-              setValue={(value) => setFormData({ ...formData, sektor: value })}
+              value={currentComplaint.sektor}
+              setValue={(value) =>
+                setCurrentComplaint({ ...currentComplaint, sektor: value })
+              }
               title="Sektor"
               placeholder="-- Select Sector --"
             />
@@ -179,7 +162,7 @@ const InputComplaint: React.FC = () => {
                   name="keluhan"
                   placeholder="e.g. Printer tidak bisa menyala"
                   className="w-full font-normal rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 h-30 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary placeholder-zinc-500 placeholder-opacity-50"
-                  value={formData.keluhan}
+                  value={currentComplaint?.keluhan}
                   onChange={handleChange}
                   required
                 ></textarea>
@@ -188,7 +171,7 @@ const InputComplaint: React.FC = () => {
 
             <div className="flex justify-end gap-5">
               <Link
-                to="/my-complaint"
+                to={role === 'admin' ? '/complaint' : '/my-complaint'}
                 className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-body dark:text-white"
                 type="submit"
               >

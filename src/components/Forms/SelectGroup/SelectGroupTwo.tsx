@@ -57,7 +57,6 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
   const pathname = useLocation();
   const { id } = useParams();
-  console.log(id);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
@@ -69,7 +68,8 @@ const SelectGroupTwo: React.FC<SelectGroupTwoProps> = ({
         {title}
         <div className="relative z-20 bg-white dark:bg-form-input mt-3">
           <span className="absolute top-1/2 left-4 z-30 -translate-y-1/2">
-            {pathname.pathname === '/add-complaint' ? (
+            {pathname.pathname === '/add-complaint' ||
+            pathname.pathname === `/edit-complaint/${id}` ? (
               <PiMapPin className="text-neutral-500 text-xl dark:text-bodydark" />
             ) : (
               <MdOutlineAdminPanelSettings className="text-neutral-500 text-xl dark:text-bodydark" />

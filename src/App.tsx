@@ -10,12 +10,8 @@ import ProtectedLayout from './components/ProtectedLayout';
 import {
   Alerts,
   Buttons,
-  Calendar,
   Chart,
-  AdminDashboard,
   DefaultLayout,
-  FormElements,
-  FormLayout,
   LandingPage,
   Settings,
   SignIn,
@@ -26,8 +22,11 @@ import InputUser from './pages/User/InputUser';
 import DataUser from './pages/User/DataUser';
 import Complaint from './pages/Complaint';
 import Guest from './pages/Dashboard/Guest';
-import InputComplaint from './pages/Complaint/inputComplaint';
 import EditUser from './pages/User/EditUser';
+import MyComplaint from './pages/Complaint/MyComplaint';
+import InputComplaint from './pages/Complaint/InputComplaint';
+import EditComplaint from './pages/Complaint/EditComplaint';
+import AdminDashboard from './pages/Dashboard/Admin';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -63,7 +62,7 @@ function App() {
             path="/"
             element={
               <>
-                <PageTitle title="Si-ticket" />
+                <PageTitle title="Si-Ticket" />
                 <LandingPage />
               </>
             }
@@ -72,7 +71,7 @@ function App() {
             path="/auth/signin"
             element={
               <>
-                <PageTitle title="Signin | Si-ticket" />
+                <PageTitle title="Sign In | Si-Ticket" />
                 <SignIn />
               </>
             }
@@ -91,22 +90,13 @@ function App() {
               }
             >
               {role === 'admin' ? (
-                <>
+                <Route>
                   <Route
                     path="/admin-dashboard"
                     element={
                       <>
-                        <PageTitle title="Dashboard | Si-ticket" />
+                        <PageTitle title="Dashboard | Si-Ticket" />
                         <AdminDashboard />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/calendar"
-                    element={
-                      <>
-                        <PageTitle title="Calendar | Si-ticket" />
-                        <Calendar />
                       </>
                     }
                   />
@@ -114,8 +104,26 @@ function App() {
                     path="/complaint"
                     element={
                       <>
-                        <PageTitle title="Complaint | Si-ticket" />
+                        <PageTitle title="Complaint | Si-Ticket" />
                         <Complaint />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/add-complaint"
+                    element={
+                      <>
+                        <PageTitle title="Add Complaint | Si-Ticket" />
+                        <InputComplaint />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/edit-complaint/:id"
+                    element={
+                      <>
+                        <PageTitle title="Add Complaint | Si-Ticket" />
+                        <EditComplaint />
                       </>
                     }
                   />
@@ -123,7 +131,7 @@ function App() {
                     path="/users/input-user"
                     element={
                       <>
-                        <PageTitle title="Input User | Si-ticket" />
+                        <PageTitle title="Input User | Si-Ticket" />
                         <InputUser />
                       </>
                     }
@@ -132,7 +140,7 @@ function App() {
                     path="/users/data-users"
                     element={
                       <>
-                        <PageTitle title="Data Users | Si-ticket" />
+                        <PageTitle title="Data Users | Si-Ticket" />
                         <DataUser />
                       </>
                     }
@@ -141,91 +149,19 @@ function App() {
                     path="/users/edit-user/:id"
                     element={
                       <>
-                        <PageTitle title="Edit Data Users | Si-ticket" />
+                        <PageTitle title="Edit Data Users | Si-Ticket" />
                         <EditUser />
                       </>
                     }
                   />
-                  <Route
-                    path="/forms/form-elements"
-                    element={
-                      <>
-                        <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <FormElements />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/forms/form-layout"
-                    element={
-                      <>
-                        <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <FormLayout />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/tables"
-                    element={
-                      <>
-                        <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <Tables />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/settings"
-                    element={
-                      <>
-                        <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <Settings />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/chart"
-                    element={
-                      <>
-                        <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <Chart />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/ui/alerts"
-                    element={
-                      <>
-                        <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <Alerts />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/ui/buttons"
-                    element={
-                      <>
-                        <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <Buttons />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/auth/signup"
-                    element={
-                      <>
-                        <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                        <SignUp />
-                      </>
-                    }
-                  />
-                </>
+                </Route>
               ) : (
                 <>
                   <Route
                     path="/guest-dashboard"
                     element={
                       <>
-                        <PageTitle title="Dashboard | Si-ticket" />
+                        <PageTitle title="Dashboard | Si-Ticket" />
                         <Guest />
                       </>
                     }
@@ -234,8 +170,26 @@ function App() {
                     path="/add-complaint"
                     element={
                       <>
-                        <PageTitle title="Dashboard | Si-ticket" />
+                        <PageTitle title="Add Complaint | Si-Ticket" />
                         <InputComplaint />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/edit-complaint/:id"
+                    element={
+                      <>
+                        <PageTitle title="Add Complaint | Si-Ticket" />
+                        <EditComplaint />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/my-complaint"
+                    element={
+                      <>
+                        <PageTitle title="My Complaint | Si-Ticket" />
+                        <MyComplaint />
                       </>
                     }
                   />

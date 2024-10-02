@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
 import { PiEnvelopeOpenDuotone, PiEnvelopeDuotone } from 'react-icons/pi';
 import axiosInstance from '../../utils/axiosConfig';
 import { LiaMailBulkSolid } from 'react-icons/lia';
+import CardDataStats from '../../components/CardDataStats';
 
 export interface IStats {
   open: number;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LogoUT from '../../images/logo/logut.png';
+import LogoUT from '../../images/logoUT.png';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosConfig';
 import Cookies from 'js-cookie';
@@ -43,8 +43,8 @@ const SignIn = () => {
         Cookies.set('role', role, { expires: 1 });
         login(response.data.data, access_token);
         toast.success('Yaay! You have successfully logged in!👏', {
-          style: { fontWeight: 500, fontStyle: '14px' },
-        });
+          style: { fontWeight: 500, fontStyle: '12px' },
+        }); 
         if (role === 'admin') navigate('/admin-dashboard');
         if (role === 'guest') navigate('/guest-dashboard');
       }
@@ -68,11 +68,11 @@ const SignIn = () => {
   return (
     <>
       {/* -- Background Img -- */}
-      <div className="h-screen brightness-75 top-0 left-0 bg-cover right-0 bottom-0 absolute bg-[url('../images/cover/hd.jpg')]"></div>
+      <div className="h-screen brightness-75 top-0 left-0 bg-cover right-0 bottom-0 absolute bg-[url('../images/hd.jpg')]"></div>
       {/* -- Background Img -- */}
 
       <div className="h-screen flex justify-center items-center rounded-sm border border-stroke bg-white shadow-default ">
-        <div className="w-full m-10 xl:w-1/3 bg-white/85 backdrop-blur-sm relative rounded-lg">
+        <div className="w-full m-2 p-5 sm:p-0 sm:h-auto sm:m-10 xl:w-1/3 bg-white/85 backdrop-blur-sm relative rounded-lg">
           <div className="flex items-center gap-2 mt-5 justify-center">
             <img src={LogoUT} alt="logo hp" className="w-1/3" />
           </div>

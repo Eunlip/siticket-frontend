@@ -4,7 +4,6 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axiosInstance from '../../utils/axiosConfig';
 import toast from 'react-hot-toast';
 import { useNavigate, Link, useParams } from 'react-router-dom';
-import { TUserData } from '../../types/user';
 
 const EditUser: React.FC = () => {
   const [formData, setFormData] = useState<{
