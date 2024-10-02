@@ -104,6 +104,8 @@ const InputComplaint: React.FC = () => {
     getCurrentUser();
   }, []);
 
+  console.log(role)
+
   return (
     <>
       <Breadcrumb pageName="Add Complaint" />
@@ -188,7 +190,7 @@ const InputComplaint: React.FC = () => {
 
             <div className="flex justify-end gap-5">
               <Link
-                to="/my-complaint"
+                to={role === 'guest' ? '/my-complaint' : '/complaint'}
                 className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-body dark:text-white"
                 type="submit"
               >
