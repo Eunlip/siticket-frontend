@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LogoUT from '../../images/logoUT.png';
+import LogoUT from '../../assets/images/logoUT.png';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../utils/axiosConfig';
 import Cookies from 'js-cookie';
@@ -68,7 +68,7 @@ const SignIn = () => {
   return (
     <>
       {/* -- Background Img -- */}
-      <div className="h-screen brightness-75 top-0 left-0 bg-cover right-0 bottom-0 absolute bg-[url('../images/hd.jpg')]"></div>
+      <div className="h-screen brightness-75 top-0 left-0 bg-cover right-0 bottom-0 absolute bg-[url('../assets/images/hd.jpg')]"></div>
       {/* -- Background Img -- */}
 
       <div className="h-screen flex justify-center items-center rounded-sm border border-stroke bg-white shadow-default ">

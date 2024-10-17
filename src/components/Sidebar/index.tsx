@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
-import Logo from '../../images/logo.png';
+import Logo from '../../assets/images/logo.png';
 import { LuUsers } from 'react-icons/lu';
 import { IoTicketOutline } from 'react-icons/io5';
 import Cookies from 'js-cookie';

@@ -7,17 +7,7 @@ import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import ProtectedLayout from './components/ProtectedLayout';
 
-import {
-  Alerts,
-  Buttons,
-  Chart,
-  DefaultLayout,
-  LandingPage,
-  Settings,
-  SignIn,
-  SignUp,
-  Tables,
-} from './pages';
+import { DefaultLayout, LandingPage, SignIn } from './pages';
 import InputUser from './pages/User/InputUser';
 import DataUser from './pages/User/DataUser';
 import Complaint from './pages/Complaint';
@@ -53,9 +43,9 @@ function App() {
   }, [token]);
 
   return (
-    <div className="bg-neutral-800">
+    <div>
       <Toaster />
-      {loading && <Loader />}
+      {/*{loading && <Loader />}*/}
       {!token ? (
         <Routes>
           <Route
@@ -122,7 +112,7 @@ function App() {
                     path="/edit-complaint/:id"
                     element={
                       <>
-                        <PageTitle title="Add Complaint | Si-Ticket" />
+                        <PageTitle title="Edit Complaint | Si-Ticket" />
                         <EditComplaint />
                       </>
                     }
@@ -137,20 +127,20 @@ function App() {
                     }
                   />
                   <Route
+                    path="/users/edit-user/:id"
+                    element={
+                      <>
+                        <PageTitle title="Edit Data User | Si-Ticket" />
+                        <EditUser />
+                      </>
+                    }
+                  />
+                  <Route
                     path="/users/data-users"
                     element={
                       <>
                         <PageTitle title="Data Users | Si-Ticket" />
                         <DataUser />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/users/edit-user/:id"
-                    element={
-                      <>
-                        <PageTitle title="Edit Data Users | Si-Ticket" />
-                        <EditUser />
                       </>
                     }
                   />
@@ -179,7 +169,7 @@ function App() {
                     path="/edit-complaint/:id"
                     element={
                       <>
-                        <PageTitle title="Add Complaint | Si-Ticket" />
+                        <PageTitle title="Edit Complaint | Si-Ticket" />
                         <EditComplaint />
                       </>
                     }

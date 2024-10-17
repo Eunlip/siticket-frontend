@@ -6,7 +6,8 @@ module.exports = {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      epilogue: ['Epilogue', 'sans-serif'],
+      roboto: ['Roboto', 'sans-serif'],
+      openSans: ['Open Sans', 'sans-serif'],
     },
     screens: {
       '2xsm': '375px',
@@ -19,7 +20,7 @@ module.exports = {
         current: 'currentColor',
         transparent: 'transparent',
         white: '#FFFFFF',
-        black: '#1C2434',
+        black: '#1E1E1E',
         'black-2': '#010101',
         body: '#64748B',
         bodydark: '#AEB7C0',
@@ -250,8 +251,4 @@ module.exports = {
       },
     },
   },
-  //plugins: [require('daisyui')],
-  //daisyui: {
-  //  themes: ['halloween', 'light'],
-  //},
 };

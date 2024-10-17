@@ -1,43 +1,137 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import heroImg from '../images/HP3.png';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useAnimation, useInView } from 'framer-motion';
+import Navbar from '../components/Section/Navbar';
+import Hero from '../components/Section/Hero';
+import icon1 from '../assets/icon/Group 4.svg';
+import icon2 from '../assets/icon/Group 4-1.svg';
+import icon3 from '../assets/icon/Group 4-2.svg';
+import icon4 from '../assets/icon/Group 4-3.svg';
+import MockupImg1 from '../assets/images/Mockup-web1.svg';
+import About from '../components/Section/About';
+import Services from '../components/Section/Services';
+import Footer from '../components/Section/Footer';
 
-const LandingPage = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+type Icon = {
+	src: string;
+	alt: string;
+	title: string;
+};
 
-  useEffect(() => {
-    const token = false;
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+const icons: Icon[] = [
+	{
+		src: icon1,
+		alt: 'icon lightning',
+		title: 'Respon Cepat',
+	},
+	{
+		src: icon2,
+		alt: 'icon done',
+		title: 'Solusi Efektif',
+	},
+	{
+		src: icon3,
+		alt: 'icon clock',
+		title: 'Dukungan 24/7',
+	},
+	{
+		src: icon4,
+		alt: 'icon notification',
+		title: 'Cepat Tanggap',
+	},
+];
 
-return (
-    <div className="sm:container px-0 pt-5 mx-auto 2xl:px-20 md:px-10 min-h-screen">
-      <Navbar />
-      <div className="container px-4 flex justify-between md:items-center lg:items-start mt-0 sm:mt-10 flex-col sm:flex-row">
-        <div className="py-20 sm:py-32 flex flex-col gap-10">
-          <div className="space-y-7">
-            <h1 className="text-5xl sm:text-5xl md:text-4xl xl:text-5xl sm:leading-snug text-center sm:text-left leading-snug font-bold text-slate-100">
-              Aplikasi Pelaporan Ticket
-            </h1>
-            <p className="text-sm sm:text-base xl:text-lg text-center sm:text-start leading-relaxed text-slate-300">
-              Solusi yang dapat diakses melalui browser web,
-              <br /> sehingga memudahkan akses pelaporan kerusakan barang.
-            </p>
-          </div>
-          <Link
-            to={isAuthenticated ? '/' : '/auth/signin'}
-            className="py-3 mx-auto sm:mx-0 hover:bg-[#f0c545] px-10 w-fit rounded-md font-semibold bg-[#ffc107] text-neutral-600"
-          >
-            Buat Laporan
-          </Link>
-        </div>
-        <img src={heroImg} alt="hero hp img" className="w-[500px] md:w-[350px] xl:w-[500px] 2xl:w-[500px] h-auto object-cover" />
-      </div>
-    </div>
-  );
+const LandingPage: React.FC = () => {
+	const [sidebarOpen, setSidebarOpen] = useState(false);
+
+	// Refs for each section
+	const divRef = useRef(null);
+	const imgRef = useRef(null);
+
+	// Controls for each section animation
+	const divControls = useAnimation();
+	const imgControls = useAnimation();
+
+	// Check if each section is in view
+	const isDivInView = useInView(divRef, { once: true });
+	const isImgInView = useInView(imgRef, { once: true });
+
+	// Start animation for div when it is in view
+	if (isDivInView) {
+		divControls.start('visible');
+	}
+
+	useEffect(() => {
+		if (isImgInView) {
+			imgControls.start('visible');
+		} else {
+			imgControls.start('flat');
+		}
+	}, [isImgInView, imgControls]);
+
+	return (
+		<>
+			<Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+			<div className='sm:container px-5 md:px-10 lg:px-0 pt-5 mx-auto min-h-screen'>
+				<Hero />
+
+				<motion.div
+					ref={divRef}
+					initial='hidden'
+					animate={divControls}
+					variants={{
+						hidden: { opacity: 0, y: 50 },
+						visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2, delay: 0.5 } },
+					}}
+					className='container xl:px-50 3xl:px-96 mt-10 mb-30'
+				>
+					<div className='bg-gradient-to-r h-44 from-[#E3E4FF] to-[#FFF5CF] rounded-3xl'>
+						<div className='flex text-[#6D6D6D] font-semibold font-openSans justify-around items-center h-full'>
+							{icons.map((icon) => (
+								<motion.div
+									key={icon.src}
+									variants={{
+										hidden: { opacity: 0, x: -50 },
+										visible: {
+											opacity: 1,
+											x: 0,
+											transition: { duration: 0.5 },
+										},
+									}}
+									className='flex flex-col items-center gap-5'
+								>
+									<img src={icon.src} alt={icon.alt} draggable='false' />
+									<p className='text-xl'>{icon.title}</p>
+								</motion.div>
+							))}
+						</div>
+					</div>
+				</motion.div>
+
+				<motion.img
+					ref={imgRef}
+					initial='flat'
+					animate={imgControls}
+					variants={{
+						flat: { scale: 0.8, rotate: 5, opacity: 0.5 },
+						visible: {
+							scale: 1,
+							rotate: 0,
+							opacity: 1,
+							transition: { duration: 1, type: 'spring' },
+						},
+					}}
+					src={MockupImg1}
+					className='mx-auto w-[2500px] 3xl:w-[1500px]'
+					alt='mockup web'
+					draggable='false'
+				/>
+			</div>
+
+			<About />
+			<Services />
+			<Footer />
+		</>
+	);
 };
 
 export default LandingPage;
