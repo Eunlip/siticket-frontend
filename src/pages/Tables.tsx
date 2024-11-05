@@ -1,5 +1,5 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import TableDashboard from '../components/Tables/UsersTable';
+import TableDashboard from '../components/ui/UsersTable';
 
 const Tables = () => {
   return (

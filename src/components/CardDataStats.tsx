@@ -1,37 +1,28 @@
 import React, { ReactNode } from 'react';
 
 interface CardDataStatsProps {
-  title: string;
-  total: number;
-  rate: string;
-  levelUp?: boolean;
-  levelDown?: boolean;
-  children: ReactNode;
+	title: string;
+	total: number;
+	bgIcon: string;
+	children: ReactNode;
 }
 
-const CardDataStats: React.FC<CardDataStatsProps> = ({
-  title,
-  total,
-  rate,
-  levelUp,
-  levelDown,
-  children,
-}) => {
-  return (
-    <div className="rounded-lg border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark transition-all duration-300">
-      <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
-        {children}
-      </div>
+const CardDataStats: React.FC<CardDataStatsProps> = ({ title, total, children, bgIcon }) => {
+	return (
+		<div className='rounded-lg border border-stroke bg-white py-4 px-7.5 shadow dark:border-strokedark dark:bg-boxdark transition-all duration-300'>
+			<div
+				className={`flex h-11.5 ${bgIcon} w-11.5 items-center justify-center rounded-full dark:bg-meta-4`}
+			>
+				{children}
+			</div>
 
-      <div className="mt-4 flex items-end justify-between">
-        <div>
-          <h4 className="text-title-md font-bold text-black dark:text-white">
-            {total}
-          </h4>
-          <span className="text-sm font-medium">{title}</span>
-        </div>
+			<div className='mt-4 flex items-end justify-between'>
+				<div>
+					<h4 className='text-title-md font-bold text-black dark:text-white'>{total}</h4>
+					<span className='text-sm font-medium'>{title}</span>
+				</div>
 
-        <span
+				{/*<span
           className={`flex items-center gap-1 text-sm font-medium ${
             levelUp && 'text-meta-3'
           } ${levelDown && 'text-meta-5'} `}
@@ -68,10 +59,10 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
               />
             </svg>
           )}
-        </span>
-      </div>
-    </div>
-  );
+        </span>*/}
+			</div>
+		</div>
+	);
 };
 
 export default CardDataStats;

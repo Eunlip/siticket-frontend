@@ -12,10 +12,10 @@ const About: React.FC = () => {
 	}
 
 	return (
-		<div id='about' className='bg-[#F8FAFC] my-20'>
+		<div className='bg-[#F8FAFC] my-20'>
 			<div className='sm:container px-5 md:px-10 pt-5 lg:px-0 mx-auto'>
-				<div className='container xl:px-20 3xl:px-80 flex justify-between items-start mt-0 sm:mt-15'>
-					<div className='flex flex-col gap-15'>
+				<div className='container xl:px-20 3xl:px-80 flex flex-col sm:flex-row justify-center xl:gap-30 items-start mt-0 sm:mt-15'>
+					<div className='flex flex-col gap-7 sm:gap-15'>
 						<motion.div
 							ref={ref}
 							initial='hidden'
@@ -29,7 +29,7 @@ const About: React.FC = () => {
 									transition: { type: 'spring', duration: 1, delay: 0.3 },
 								},
 							}}
-							className='rounded-full w-fit text-sm bg-[#FCF4D2] text-[#BC9A00] px-6 py-2 uppercase font-roboto font-medium shadow tracking-wider'
+							className='rounded-full mx-auto sm:mx-0 w-fit text-sm bg-[#FCF4D2] text-[#BC9A00] px-6 py-2 uppercase font-roboto font-medium shadow tracking-wider'
 						>
 							Tentang Kami
 						</motion.div>
@@ -45,9 +45,9 @@ const About: React.FC = () => {
 									transition: { type: 'spring', duration: 1.2, delay: 0.6 },
 								},
 							}}
-							className='space-y-6'
+							className='space-y-6 text-center sm:text-start'
 						>
-							<h1 className='capitalize text-5xl font-roboto font-medium max-w-[600px] leading-tight'>
+							<h1 className='capitalize text-3xl lg:text-5xl font-roboto font-medium max-w-[600px] leading-tight lg:leading-tight'>
 								Memberikan solusi cepat dan tepat untuk segala jenis keluhan teknis
 							</h1>
 							<p className='text-[#75778B] text-sm sm:text-xs md:text-sm lg:text-lg max-w-[500px]'>
@@ -70,6 +70,7 @@ const About: React.FC = () => {
 						}}
 						src={hp3}
 						alt='hp mockup'
+						className='mt-10 sm:mt-0 mx-auto sm:mx-0 w-[300px] lg:w-auto'
 					/>
 				</div>
 			</div>
