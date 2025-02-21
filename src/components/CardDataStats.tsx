@@ -1,25 +1,50 @@
 import React, { ReactNode } from 'react';
+import { Skeleton } from './ui/skeleton';
 
 interface CardDataStatsProps {
 	title: string;
 	total: number;
 	bgIcon: string;
 	children: ReactNode;
+	loading: boolean;
 }
 
-const CardDataStats: React.FC<CardDataStatsProps> = ({ title, total, children, bgIcon }) => {
+const CardDataStats: React.FC<CardDataStatsProps> = ({
+	title,
+	total,
+	children,
+	bgIcon,
+	loading,
+}) => {
 	return (
-		<div className='rounded-lg border border-stroke bg-white py-4 px-7.5 shadow dark:border-strokedark dark:bg-boxdark transition-all duration-300'>
-			<div
-				className={`flex h-11.5 ${bgIcon} w-11.5 items-center justify-center rounded-full dark:bg-meta-4`}
-			>
-				{children}
-			</div>
+		<div className='rounded-xl bg-white p-5 dark:bg-boxdark-2 transition-all duration-300'>
+			<div className='flex items-center gap-5'>
+				{loading ? (
+					<Skeleton className='w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700' />
+				) : (
+					<div
+						className={`flex h-10 bg-slate-100 dark:border-boxdark border-slate-200 w-10 border items-center justify-center rounded-full dark:bg-meta-4`}
+					>
+						{children}
+					</div>
+				)}
 
-			<div className='mt-4 flex items-end justify-between'>
 				<div>
-					<h4 className='text-title-md font-bold text-black dark:text-white'>{total}</h4>
-					<span className='text-sm font-medium'>{title}</span>
+					{loading ? (
+						<>
+							<Skeleton className='w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700' />
+							<Skeleton className='w-20 h-3 mt-2 rounded-full bg-slate-200 dark:bg-slate-700' />
+						</>
+					) : (
+						<>
+							<span className='text-sm font-medium font-openSans text-neutral-500 dark:text-neutral-300'>
+								{title}
+							</span>
+							<h4 className='text-title-md font-bold font-openSans text-[#494949] dark:text-neutral-300'>
+								{total}
+							</h4>
+						</>
+					)}
 				</div>
 
 				{/*<span

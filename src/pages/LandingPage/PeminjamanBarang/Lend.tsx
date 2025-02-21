@@ -1,82 +1,52 @@
-import { Link, NavLink } from 'react-router-dom';
-//import Navbar from '../../components/Section/Navbar';
-import { handleScroll } from '@/utils/navigateSection';
-import ProductTable from '@/components/Tables/ProductTable';
-import { TDataProduct } from '@/types/product';
-import axiosInstance from '@/utils/axiosConfig';
+import { Link } from 'react-router-dom';
+import LogoUT from '@/assets/images/logoUT.png';
 import { useEffect, useState } from 'react';
+import Loader from '@/common/Loader';
 
 const PeminjamanBarang: React.FC = () => {
-	const [dataBarang, setDataBarang] = useState<TDataProduct[]>([]);
-
-	const getDataBarang = async () => {
-		try {
-			const response = await axiosInstance.get('/api/barang');
-			const data = response.data.data;
-			setDataBarang(data);
-		} catch (error) {
-			console.error(error);
-		}
-	};
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		getDataBarang();
+		setTimeout(() => setLoading(false), 1000);
 	}, []);
 
 	return (
 		<>
-			{/* -- Background Img -- */}
-			<div className="h-screen bg-fixed top-0 left-0 bg-cover brightness-50 right-0 bottom-0 absolute bg-center bg-[url('../assets/images/inventory.jpg')]" />
-			{/* -- Background Img -- */}
+			{loading && <Loader />}
 
+			{/* -- Background Img -- */}
+			<div className="h-screen top-0 left-0 bg-cover brightness-50 right-0 bottom-0 absolute bg-center bg-[url('../assets/images/inventory.jpg')]" />
+			{/* -- Background Img -- */}
+			<Link to='/' className='bg-yellow-400 py-5 ps-10 pe-14 rounded-br-full absolute w-fit z-99'>
+				<img src={LogoUT} alt='logoUT' className='w-50' />
+			</Link>
 			{/*<Navbar url='/peminjaman-barang' />*/}
 			<div className='h-screen mx-auto relative container flex items-center justify-center'>
-				<div className='flex flex-col items-center gap-5'>
-					<h1 className='text-white text-5xl font-roboto font-bold uppercase w-[35rem] text-center leading-tight'>
+				<div className='flex flex-col items-center gap-4'>
+					<h1 className='text-white text-3xl sm:text-5xl font-roboto font-bold uppercase w-90 leading-normal sm:w-[35rem] text-center sm:leading-tight'>
 						Peminjaman Barang di <i className='text-orange-400'>Training Center</i>
 					</h1>
-					<div className='h-1 w-15 bg-white rounded-full' />
-					<p className='text-zinc-300 font-openSans text-sm'>
+					<div className='h-0.5 w-15 bg-white rounded-full' />
+					<p className='text-zinc-300 font-openSans w-70 sm:w-auto text-center sm:text-star'>
 						Website untuk peminjaman barang apapun yang ada di{' '}
 						<span className='font-bold text-orange-400'>TC</span>
 					</p>
-					<div className='flex gap-5 font-openSans font-medium'>
+					<div className='flex flex-col sm:flex-row gap-5 font-openSans font-medium mt-5'>
 						<Link
-							to={'/auth/signin'}
-							className='bg-blue-800 hover:bg-blue-800/95 transition-colors border border-blue-950 text-white py-2 px-8 rounded-full'
+							to='/auth/signin'
+							className='bg-blue-800 hover:bg-blue-800/95 transition-colors border border-blue-950 text-white py-2 px-8 rounded-full mx-auto'
 						>
 							Login Admin
 						</Link>
-						<NavLink
-							to='#'
+						<Link
+							to='/peminjaman-barang/daftar-barang'
 							className='bg-orange-500 hover:bg-orange-400/95 transition-colors border-orange-950 border text-white py-2 px-8 rounded-full'
-							onClick={() => handleScroll('minjam-section')}
 						>
 							Pinjam Barang
-						</NavLink>
+						</Link>
 					</div>
 				</div>
 			</div>
-
-			<div className='container mx-auto px-20 py-10 h-screen'>
-				<div
-					id='minjam-section'
-					className='px-5 pt-8 h-fit rounded-xl shadow border border-zinc-200/80'
-				>
-					<div className='mb-5 space-y-2 text-start'>
-						<h1 className='text-2xl font-bold font-roboto'>Apa yang bisa dipinjam?</h1>
-						<p className='text-neutral-400 font-roboto'>
-							Daftar barang yang bisa dipinjam di Training Center
-						</p>
-					</div>
-					<ProductTable
-						tableData={dataBarang}
-						onProductDeleted={() => {}} // Khusus untuk admin TC saja, makanya dikosongkan
-						onProductEdited={() => {}} // Khusus untuk admin TC saja, makanya dikosongkan
-					/>
-				</div>
-			</div>
-			{/*</div>*/}
 		</>
 	);
 };

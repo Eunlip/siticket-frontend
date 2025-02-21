@@ -1,4 +1,3 @@
-import { ArrowDownIcon, ArrowUpIcon, CaretSortIcon } from '@radix-ui/react-icons';
 import { Column } from '@tanstack/react-table';
 
 import { cn } from '@/lib/utils';
@@ -9,6 +8,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { ArrowDownIcon, ArrowUpIcon, CaretSortIcon } from '@radix-ui/react-icons';
 
 interface ColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
 	column: Column<TData, TValue>;
@@ -30,11 +30,11 @@ const ColumnHeader = <TData, TValue>({
 	}
 
 	return (
-		<div className={cn('flex items-center space-x-2 p-0 m-0 justify-center', className)}>
+		<div className={cn('flex items-center p-0 m-0', className)}>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button variant='ghost' size='sm' className='-ml-3 p-0 m-0 data-[state=open]:bg-accent'>
-						<span className='text-sm uppercase font-semibold'>{title}</span>
+					<div className='flex cursor-pointer items-center gap-2 data-[state=open]:bg-inherit hover:bg-inherit dark:hover:bg-inherit'>
+						<span className='text-sm'>{title}</span>
 						{column.getIsSorted() === 'desc' ? (
 							<ArrowDownIcon />
 						) : column.getIsSorted() === 'asc' ? (
@@ -42,24 +42,24 @@ const ColumnHeader = <TData, TValue>({
 						) : (
 							<CaretSortIcon />
 						)}
-					</Button>
+					</div>
 				</DropdownMenuTrigger>
-				<DropdownMenuContent align='start' className='bg-white border-neutral-200'>
+				<DropdownMenuContent align='start' className='bg-white border-neutral-200 dark:bg-boxdark dark:border-0'>
 					<DropdownMenuItem onClick={() => column.toggleSorting(false)} className='p-0 m-0'>
 						<Button
 							variant='ghost'
-							className='text-neutral-600 my-0 font-normal justify-start px-2 hover:bg-neutral-200/50 w-full'
+							className='text-neutral-800 dark:text-neutral-300 my-0 font-normal justify-start px-2 dark:hover:bg-slate-700 hover:bg-neutral-200/50 w-full'
 						>
-							<ArrowUpIcon className='mr-2 text-muted-foreground/70' />
+							<ArrowUpIcon className='mr-1 text-muted-foreground/70' />
 							{filterUp}
 						</Button>
 					</DropdownMenuItem>
 					<DropdownMenuItem onClick={() => column.toggleSorting(true)} className='p-0 m-0'>
 						<Button
 							variant='ghost'
-							className='text-neutral-600 my-0 font-normal justify-start px-2 hover:bg-neutral-200/50 w-full'
+							className='text-neutral-800 dark:text-neutral-300 my-0 font-normal justify-start px-2 dark:hover:bg-slate-700 hover:bg-neutral-200/50 w-full'
 						>
-							<ArrowDownIcon className='mr-2 text-muted-foreground/70' />
+							<ArrowDownIcon className='mr-1 text-muted-foreground/70' />
 							{filterDown}
 						</Button>
 					</DropdownMenuItem>

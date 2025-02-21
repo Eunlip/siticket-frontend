@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import LogoUT from '../../assets/images/logoUT.png';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../utils/axiosConfig';
+import axiosInstance from '@/utils/axiosConfig';
 import Cookies from 'js-cookie';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 interface IFormData {
 	username: string;
@@ -17,7 +18,6 @@ const SignIn = () => {
 		password: '',
 	});
 	const [loading, setLoading] = useState<boolean>(false);
-
 	const authContext = useAuth();
 	if (!authContext) {
 		throw new Error('AuthContext is null');
@@ -37,32 +37,33 @@ const SignIn = () => {
 		setLoading(true);
 		try {
 			const response = await axiosInstance.post('/api/login', formData);
-			const { access_token } = response.data;
-			const { role } = response.data;
+			const { access_token, role } = response.data;
 
 			if (response.status === 200) {
 				Cookies.set('access_token', access_token, { expires: 1 });
 				Cookies.set('role', role, { expires: 1 });
 				login(response.data.data, access_token);
+
 				toast.success('Yaay! You have successfully logged in!👏', {
-					style: { fontWeight: 500, fontStyle: '12px' },
+					style: { fontWeight: 500 },
 				});
 
-				if (role === 'admin') navigate('/admin-dashboard');
-				if (role === 'guest') navigate('/guest-dashboard');
-				if (role === 'tc') navigate('/tc-dashboard');
+				if (role === 'admin') navigate('/ticket/admin-dashboard');
+				if (role === 'guest') navigate('/ticket/my-complaint');
+				if (role === 'tc') navigate('/peminjaman-barang/tc-dashboard');
+				if (role === 'esr') navigate('/esr-ut');
 			}
 		} catch (error) {
 			if (formData.username && formData.password) {
 				toast.error('Oops! Invalid username or password', {
-					style: { fontWeight: 500, fontStyle: '14px' },
+					style: { fontWeight: 500 },
 				});
 				return;
 			}
 
 			if (formData.username === '' && formData.password === '') {
 				toast.error('Please enter your username and password!', {
-					style: { fontWeight: 500, fontStyle: '14px' },
+					style: { fontWeight: 500 },
 				});
 				return;
 			}
@@ -78,10 +79,13 @@ const SignIn = () => {
 			{/* -- Background Img -- */}
 
 			<div className='h-screen flex justify-center items-center rounded-sm border border-stroke bg-white shadow-default '>
-				<div className='w-full m-2 p-5 sm:p-0 sm:h-auto sm:m-10 xl:w-1/3 bg-white/85 backdrop-blur-sm relative rounded-lg'>
-					<div className='flex items-center gap-2 mt-5 justify-center'>
-						<img src={LogoUT} alt='logo hp' className='w-1/3' />
-					</div>
+				<div className='w-full m-2 p-5 sm:p-0 sm:h-auto sm:m-10 md:w-2/3 xl:w-1/2 2xl:w-1/3 bg-white/85 backdrop-blur-md relative rounded-lg'>
+					<img
+						src={LogoUT}
+						alt='logo ut'
+						className='w-1/3 mt-5 mx-auto'
+						loading='lazy'
+					/>
 					<div className='w-full p-4 sm:p-12.5 '>
 						<div className='flex flex-col gap-5'>
 							<span className='flex items-center justify-center'></span>
@@ -137,7 +141,7 @@ const SignIn = () => {
 											value={formData.password}
 											onChange={handleChange}
 											autoComplete='current-password'
-											placeholder='6+ Characters, 1 Capital letter'
+											placeholder='******'
 											className='w-full rounded-lg font-normal border border-slate-400 bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-strokedark focus-visible:shadow-none'
 											required
 										/>

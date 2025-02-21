@@ -7,19 +7,24 @@ interface BreadcrumbProps {
 const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
 	const role = Cookies.get('role');
 
-	const dashboardPath = role === 'admin' ? '/admin-dashboard' : role === 'tc' ? '/tc-dashboard' : '/guest-dashboard';
+	let dashboardPath = '';
+
+	if (role === 'admin') {
+		dashboardPath = '/ticket/admin-dashboard';
+	} else if (role === 'tc') {
+		dashboardPath = '/peminjaman-barang/tc-dashboard';
+	} else {
+		dashboardPath = '/ticket/guest-dashboard';
+	}
 
 	return (
-		<div className='mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-			<h2 className='text-title-md2 font-semibold text-black dark:text-white'>{pageName}</h2>
+		<div className='pb-4 mb-0 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+			<h2 className='text-title-md font-semibold text-black dark:text-white'>{pageName}</h2>
 
 			<nav>
 				<ol className='flex items-center gap-2'>
 					<li>
-						<Link
-							className='font-medium underline text-neutral-400'
-							to={dashboardPath}
-						>
+						<Link className='font-normal underline text-neutral-500' to={dashboardPath}>
 							Dashboard
 						</Link>
 					</li>

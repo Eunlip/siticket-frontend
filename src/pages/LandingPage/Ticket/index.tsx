@@ -9,7 +9,7 @@ import Footer from '@/components/Section/Footer';
 import MockupImg1 from '@/assets/images/Mockup-web1.svg';
 import { icons } from '@/constants/mockData';
 
-const LandingPage: React.FC = () => {
+const LandingPageTicket: React.FC = () => {
 	const divRef = useRef(null);
 	const imgRef = useRef(null);
 
@@ -97,4 +97,4 @@ const LandingPage: React.FC = () => {
 	);
 };
 
-export default LandingPage;
+export default LandingPageTicket;

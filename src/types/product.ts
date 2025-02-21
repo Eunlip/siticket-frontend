@@ -1,5 +1,3 @@
-import { TPeminjamanProduct } from './peminjamanProduct';
-
 export type TDataProduct = {
 	id?: number;
 	corpu_area: string;
@@ -16,9 +14,4 @@ export type TDataProduct = {
 	quantity: number;
 };
 
-export type TDialogActionProps = {
-	selectedRowDataProduct?: TDataProduct | null;
-	selectedRowDataPeminjaman?: TPeminjamanProduct | null;
-	open: boolean;
-	onOpenChange: (isOpen: boolean) => void;
-};
+

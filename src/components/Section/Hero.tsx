@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
 					</p>
 				</motion.div>
 
-				<Link to={'/auth/signin'}>
+				<Link to={'/auth/signin'} className='sm:w-fit w-full'>
 					<motion.div
 						ref={ref}
 						initial='hidden'
@@ -66,7 +66,9 @@ const Hero: React.FC = () => {
 							},
 						}}
 						className='py-3 mx-auto text-lg sm:mx-0 hover:bg-[#004896e8] px-7 w-fit rounded-lg font-semibold bg-[#004996] text-white'
-					>Laporkan Keluhan</motion.div>
+					>
+						Laporkan Keluhan
+					</motion.div>
 				</Link>
 			</div>
 			<motion.img

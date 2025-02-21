@@ -1,8 +1,9 @@
-import { Columns } from '@/components/DataTable/Columns';
+import { ColumnsProduct } from '@/components/DataTable/Columns/ColumnsProduct';
 import DataTable from '../DataTable';
 import { TDataProduct } from '@/types/product';
+import { useLocation } from 'react-router-dom';
 
-export interface ProductTableProps {
+interface ProductTableProps {
 	tableData: TDataProduct[];
 	onProductEdited: (updatedProduct: TDataProduct) => void;
 	onProductDeleted: (id: string) => void;
@@ -13,7 +14,15 @@ const ProductTable: React.FC<ProductTableProps> = ({
 	onProductEdited,
 	onProductDeleted,
 }) => {
-	return <DataTable columns={Columns({ onProductEdited, onProductDeleted })} data={tableData} />;
+	const { pathname } = useLocation();
+
+	return (
+		<DataTable
+			columns={ColumnsProduct({ onProductEdited, onProductDeleted })}
+			data={tableData}
+			path={pathname}
+		/>
+	);
 };
 
 export default ProductTable;

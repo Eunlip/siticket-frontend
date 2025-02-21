@@ -17,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ url }) => {
 				className='bg-[#FFE41A]
 				flex container sm:container lg:w-auto lg:min-w-[850px] items-center sm:gap-10  justify-between bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-90 rounded-full p-4 sm:p-5 sm:px-14 shadow-md sm:mx-0'
 			>
-				<div className='flex gap-3'>
+				<Link to='/' className='flex gap-3'>
 					<img src={Logo} alt='logo ut' className='w-50 hidden sm:block' draggable='false' />
 					<img
 						src={LogoUT}
@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ url }) => {
 						className='w-10 object-cover block sm:hidden'
 						draggable='false'
 					/>
-				</div>
+				</Link>
 				<div>
 					<Link
 						to={'/auth/signin'}
